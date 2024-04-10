@@ -40,6 +40,11 @@ jobs:
     - name: Create SBOM with CycloneDX
       uses: CycloneDX/gh-node-module-generatebom@v1
       with:
+        # generate artifact 
+        artifact: './test.app'
+        # output artifact
+        outputFormat: 'bom-xml'
+        # output path
         output: './test.app.bom.xml'
 
     - name: Build and push Docker image
