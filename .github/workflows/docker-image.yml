@@ -27,6 +27,8 @@ jobs:
       with:
         context: .
         push: true
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
         tags: |
           ghcr.io/nextjs/nextjs:latest
 
