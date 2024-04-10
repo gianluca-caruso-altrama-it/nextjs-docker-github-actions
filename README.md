@@ -42,9 +42,8 @@ Build
 $: docker build . -t nextjs:0.1.0 
 ```
 
+
 Run
 ```bash
 $: docker run -p 3000:3000 nextjs:0.1.0
 ```
-
-#
