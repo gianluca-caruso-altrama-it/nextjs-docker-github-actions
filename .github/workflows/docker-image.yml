@@ -22,6 +22,14 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - name: Create SBOM with CycloneDX
+        uses: CycloneDX/gh-node-module-generatebom@v1
+        with: 
+          output: './test.app.bom.xml'
 
     - name: Log in to the Container registry
       uses: docker/login-action@v2
@@ -36,16 +44,6 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       
-    - run: npm install
-    - name: Create SBOM with CycloneDX
-      uses: CycloneDX/gh-node-module-generatebom@v1
-      with:
-        # generate artifact 
-        artifact: './test.app'
-        # output artifact
-        outputFormat: 'bom-xml'
-        # output path
-        output: './test.app.bom.xml'
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
