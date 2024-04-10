@@ -12,6 +12,20 @@ env:
 
 jobs:
 
+  generate_sbom:
+      runs-on: ubuntu-latest
+      name: Install and build javascript
+      steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+          with:
+            node-version: '16'
+        - run: npm install
+        - name: Create SBOM with CycloneDX
+          uses: CycloneDX/gh-node-module-generatebom@v1
+          with: 
+            output: './test.app.bom.xml'
+
   build_and_publish:
     runs-on: ubuntu-latest
 
@@ -22,14 +36,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - run: npm install
-      - name: Create SBOM with CycloneDX
-        uses: CycloneDX/gh-node-module-generatebom@v1
-        with: 
-          output: './test.app.bom.xml'
+
 
     - name: Log in to the Container registry
       uses: docker/login-action@v2
