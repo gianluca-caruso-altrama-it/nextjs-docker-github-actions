@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   BRANCH_NAME: master
-  NAME_CONTAINER: ${{ github.repository }}-master
+  NAME_CONTAINER: app
 
 jobs:
 
@@ -69,11 +69,12 @@ jobs:
 
       - name: Remove existing container on self-hosted
         run: |
-          docker rm -f ${{ env.NAME_CONTAINER }}
+          docker stop ${{ env.NAME_CONTAINER }}
+          docker rm ${{ env.NAME_CONTAINER }}
       
       - name: Remove existing image on self-hosted
         run: |
-          docker rmi -f ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          docker rmi ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
       - name: Login to Docker Registry
         run: | 
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin 
