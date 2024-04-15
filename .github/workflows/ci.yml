@@ -138,8 +138,8 @@ jobs:
       - name: Remove existing container on self-hosted
         continue-on-error: true
         run: |
-          docker stop ${{ env.NAME_CONTAINER }}
-          docker rm ${{ env.NAME_CONTAINER }}
+          docker stop ${{ env.NAME_CONTAINER }} 2>/dev/null
+          docker rm ${{ env.NAME_CONTAINER }} 2>/dev/null
       
       - name: Remove existing image on self-hosted
         continue-on-error: true
