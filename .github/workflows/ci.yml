@@ -138,13 +138,13 @@ jobs:
     steps:
 
       - name: Remove existing container on self-hosted
-        if: success() || failure()
+        continue-on-error: true
         run: |
           docker stop ${{ env.NAME_CONTAINER }}
           docker rm ${{ env.NAME_CONTAINER }}
       
       - name: Remove existing image on self-hosted
-        if: success() || failure()
+        continue-on-error: true
         run: |
           docker rmi ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
       - name: Login to Docker Registry
