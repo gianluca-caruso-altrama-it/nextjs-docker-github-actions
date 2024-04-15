@@ -1,9 +1,10 @@
 name: Handle Docker Images
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Esegui ogni giorno a mezzanotte
-
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 jobs:
   clean-registry:
     runs-on: ubuntu-latest
