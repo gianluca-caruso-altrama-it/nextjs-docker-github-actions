@@ -63,19 +63,6 @@ jobs:
   Pull_and_Push:
     runs-on: self-hosted
     steps:
-    - name: Log in to the Container registry
+      - name: login
       run: |
-        docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-    - name: status-1
-      run: |
-        echo 'login success'
-
-    - name: Pull image from GitHub Container Registry
-      uses: docker/pull-action@v3
-      with:
-        image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-        tags: latest
-        
-    - name: Run image from GitHub Container Registry in background
-      run: |
-        docker run -d -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        echo "login"
