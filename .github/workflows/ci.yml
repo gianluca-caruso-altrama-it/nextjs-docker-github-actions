@@ -13,6 +13,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   BRANCH_NAME: master
   NAME_CONTAINER: app
+  N_RETENTION: 3
 
 jobs:
   analyze_code:
@@ -131,6 +132,14 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+  remove-old-images:
+    runs-on: ubuntu-latest
+    needs: build_and_publish
+    steps:
+      - name: Remove old images
+        run: |
+          docker image prune -a -f --filter "until=10days"
   
   deploy:
     runs-on: self-hosted
