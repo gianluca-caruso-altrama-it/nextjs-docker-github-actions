@@ -157,10 +157,13 @@ jobs:
       - name: Pull image from docker registry on self-hosted
         run: |
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
-      - name: Create a new container from the image on self-hosted
+     
+
+      - name: Start container on self-hosted  
         run: |
-          echo "Starting container ${{ env.NAME_CONTAINER }}"
+          docker run -d --rm -p 3000:3000 --name ${{ env.NAME_CONTAINER }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          echo "Container ${{ env.NAME_CONTAINER }} running on http://localhost:3000"
+
           
-        #docker run -d --rm -p 3000:3000 --name ${{ env.NAME_CONTAINER }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
 
           
