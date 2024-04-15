@@ -74,6 +74,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Pull image and run a container on self-hosted
         run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master
 
           
