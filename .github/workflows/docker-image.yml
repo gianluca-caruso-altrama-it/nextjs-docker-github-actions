@@ -9,6 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  BRANCH_NAME: master
 
 jobs:
 
@@ -72,8 +73,11 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      - name: Pull image and run a container on self-hosted
+      - name: Pull image from docker registry on self-hosted
         run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+      - name: Create a new container from the image on self-hosted
+        run: |
+          docker run -d -rm -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
 
           
