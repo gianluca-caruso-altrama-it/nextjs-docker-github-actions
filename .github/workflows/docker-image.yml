@@ -63,10 +63,11 @@ jobs:
   Pull_and_Push:
     runs-on: self-hosted
     steps:
+      - name: Login to Docker Registry
+        run: | 
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin 
+
       - name: Pull image and run a container on self-hosted
         run: |
-          docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
           docker images 
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          docker run -d -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           
