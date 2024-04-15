@@ -68,6 +68,7 @@ jobs:
     steps:
 
       - name: Remove existing container on self-hosted
+        if: success() || failure()
         run: |
           docker stop ${{ env.NAME_CONTAINER }} 2>/dev/null
           docker rm ${{ env.NAME_CONTAINER }} 2>/dev/null
