@@ -5,6 +5,13 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  BRANCH_NAME: master
+  NAME_CONTAINER: app
+  
 jobs:
   clean-registry:
     runs-on: ubuntu-latest
