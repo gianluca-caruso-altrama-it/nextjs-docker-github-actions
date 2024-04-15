@@ -63,6 +63,8 @@ jobs:
   Pull_and_Push:
     runs-on: self-hosted
     steps:
-      - name: login
+      - name: Pull image and run a container on self-hosted
         run: |
-          echo "login"
+          docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          
