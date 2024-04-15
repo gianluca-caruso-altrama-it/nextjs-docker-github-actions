@@ -71,11 +71,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Pull image from GitHub Container Registry
-      uses: docker/image-action@v2
       run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
         
     - name: Run image from GitHub Container Registry in background
-      uses: docker/image-action@v2
       run: |
         docker run -d -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
