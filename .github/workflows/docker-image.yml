@@ -70,10 +70,11 @@ jobs:
       - name: Remove existing container on self-hosted
         if: success() || failure()
         run: |
-          docker stop ${{ env.NAME_CONTAINER }} 2>/dev/null
-          docker rm ${{ env.NAME_CONTAINER }} 2>/dev/null
+          docker stop ${{ env.NAME_CONTAINER }}
+          docker rm ${{ env.NAME_CONTAINER }}
       
       - name: Remove existing image on self-hosted
+        if: success() || failure()
         run: |
           docker rmi ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
       - name: Login to Docker Registry
