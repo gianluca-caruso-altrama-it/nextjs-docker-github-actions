@@ -78,6 +78,6 @@ jobs:
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
       - name: Create a new container from the image on self-hosted
         run: |
-          docker run -d -rm -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          docker run -d --rm -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
 
           
