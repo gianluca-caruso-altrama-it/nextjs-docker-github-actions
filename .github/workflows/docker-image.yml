@@ -69,8 +69,7 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      - run: docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "docker login successful"
+        run: echo "docker login successful"
 
     - name: Pull image from GitHub Container Registry
       uses: docker/pull-action@v3
