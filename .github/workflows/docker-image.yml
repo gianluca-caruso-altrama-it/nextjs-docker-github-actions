@@ -10,6 +10,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   BRANCH_NAME: master
+  NAME_CONTAINER: ${{ github.repository }}-master
 
 jobs:
 
@@ -61,10 +62,18 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
   
-  Pull_and_Push:
+  Deploy:
     runs-on: self-hosted
     needs: build_and_publish
     steps:
+
+      - name: Remove existing container on self-hosted
+        run: |
+          docker rm -f ${{ env.NAME_CONTAINER }}
+      
+      - name: Remove existing image on self-hosted
+        run: |
+          docker rmi -f ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
       - name: Login to Docker Registry
         run: | 
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin 
@@ -79,6 +88,6 @@ jobs:
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
       - name: Create a new container from the image on self-hosted
         run: |
-          docker run -d --rm -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          docker run -d --rm -p 3000:3000 --name ${{ env.NAME_CONTAINER }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
 
           
