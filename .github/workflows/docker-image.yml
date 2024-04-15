@@ -73,7 +73,7 @@ jobs:
     - name: Pull image from GitHub Container Registry
       run: |
         docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
+        
     - name: Run image from GitHub Container Registry in background
       run: |
         docker run -d -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
